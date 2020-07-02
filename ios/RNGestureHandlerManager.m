@@ -5,6 +5,7 @@
 #import <React/RCTComponent.h>
 #import <React/RCTRootView.h>
 #import <React/RCTTouchHandler.h>
+#import <React/RCTRootContentView.h>
 
 #import "RNGestureHandlerState.h"
 #import "RNGestureHandler.h"
@@ -18,6 +19,7 @@
 #import "Handlers/RNNativeViewHandler.h"
 #import "Handlers/RNPinchHandler.h"
 #import "Handlers/RNRotationHandler.h"
+#import "Handlers/RNForceTouchHandler.h"
 
 // We use the method below instead of RCTLog because we log out messages after the bridge gets
 // turned down in some cases. Which normally with RCTLog would cause a crash in DEBUG mode
@@ -62,6 +64,7 @@
                 @"NativeViewGestureHandler": [RNNativeViewGestureHandler class],
                 @"PinchGestureHandler": [RNPinchGestureHandler class],
                 @"RotationGestureHandler": [RNRotationGestureHandler class],
+                @"ForceTouchGestureHandler": [RNForceTouchHandler class],
                 };
     });
     
@@ -157,7 +160,7 @@
 
     UIView *parent = rootContentView.superview;
     if ([parent isKindOfClass:[RCTRootView class]]) {
-        [(RCTRootView*)parent cancelTouches];
+        [((RCTRootContentView*)rootContentView).touchHandler cancel];
     }
 }
 
